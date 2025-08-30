@@ -33,3 +33,7 @@ export const fetchOrder = (id) => API.get(`${ORDERS_BASEURL}/${id}`);
 export const updateOrder = (id, status) => API.patch(`${ORDERS_BASEURL}/${id}`, {status});
 
 export const processPayment = (token, data) => API.post(`${PAYMENTS_BASEURL}`, {token, data});
+
+export const authSignup = (email, password, first_name, phone, address) =>
+    API.post(`${USER_BASEURL}/signup`, { email, password, first_name, phone, address });
+

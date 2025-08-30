@@ -1,5 +1,7 @@
-export const PRODUCTS_BASEURL = 'https://rabbitmart-products.vercel.app/products'
-export const ORDERS_BASEURL = 'https://rabbitmart-orders.vercel.app/orders'
-export const SHIPPING_BASEURL = 'https://rabbitmart-shipping.vercel.app/shipping'
-export const PAYMENTS_BASEURL = 'https://rabbitmart-payments.vercel.app/payments'
-export const USER_BASEURL = 'https://rabbitmart-users.vercel.app/me'
+const BASE_URL = import.meta.env.VITE_API_URL;
+
+export const PRODUCTS_BASEURL = `${BASE_URL}/products`;
+export const ORDERS_BASEURL   = `${BASE_URL}/orders`;
+export const SHIPPING_BASEURL = `${BASE_URL}/shipping`;
+export const PAYMENTS_BASEURL = `${BASE_URL}/payments`;
+export const USER_BASEURL     = `${BASE_URL}/me`;
