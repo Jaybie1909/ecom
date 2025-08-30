@@ -39,7 +39,8 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 const mongooseOptions = {
-    useNewUrlParser: true,
+    useNewUrlParser: 
+    true,
     useUnifiedTopology: true
 }
 

@@ -69,3 +69,50 @@ export const verifyRole = async (req, res) => {
         return res.status(400).json({message: e.message});
     }
 }
+
+export const signup = async (req, res) => {
+    const { email, password, first_name, phone, address } = req.body;
+
+    if (!email) return res.status(400).json({ message: "Email address is required" });
+    if (!password) return res.status(400).json({ message: "Password is required" });
+
+    try {
+        const existingUser = await Users.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "User already exists" });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 12);
+
+        const newUser = await Users.create({
+            email,
+            password: hashedPassword,
+            first_name: first_name || "",
+            phone: phone || "",
+            address: address || "",
+            role: "user",          // 👈 default role
+            wishlist: []           // 👈 initialize empty wishlist
+        });
+
+        const token = jwt.sign(
+            { id: newUser._id, email: newUser.email },
+            process.env.JWT_SECRET_KEY,
+            { expiresIn: process.env.JWT_AUTH_TTL }
+        );
+
+        return res.status(201).json({
+            user: {
+                _id: newUser._id,
+                email: newUser.email,
+                first_name: newUser.first_name,
+                phone: newUser.phone,
+                address: newUser.address,
+                role: newUser.role,
+                wishlist: newUser.wishlist
+            },
+            token
+        });
+    } catch (e) {
+        return res.status(500).json({ message: e.message });
+    }
+};
